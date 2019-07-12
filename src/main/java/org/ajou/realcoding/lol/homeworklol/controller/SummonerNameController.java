@@ -26,27 +26,16 @@ public class SummonerNameController {
     @Autowired
     private SummonerLeaguePosiApiClient summonerLeaguePosiApiClient;
 
-    //@Autowired
-    //private InformationUser informationUser;
+
 
     @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}")
     public InformationUser getSummonerId(@PathVariable String summonerName) throws IOException, InterruptedException {
-        InformationUser informationUser = new InformationUser();
-        SummonerDTO summonerDTO = summonerIdApiClient.requestSummonerDTO(summonerName);
-        informationUser.setSummonerinfo(summonerDTO);
-        String id = summonerDTO.getId();
-        List<LeagueDTO> leagues = summonerLeaguePosiApiClient.requestLeagueDTO(id);
-        informationUser.setLeagueInfo(leagues);
-        return informationUser;
+
+        return lolencryptedSummonerIdService.insertLegueDTOBySummonerName(summonerName);
+
         //소환사 이름을 통해서 id를 얻는 api client에 선언된 함수를 호출해서 얻어오는 함수
     }
-    /*@GetMapping("/lol/league/v4/entries/by-summoner/{summonerId}")
-    public InformationUser getSummonerLeagueInfo(@PathVariable String summonerId)
-    {
-        informationUser.setLeagueInfo(summonerLeaguePosiApiClient.requestLeagueDTO(summonerId));
-        //informationUser.setLeagueInfo(leagueInfo);
-        return informationUser;
-    }*/
+
 
 
 }

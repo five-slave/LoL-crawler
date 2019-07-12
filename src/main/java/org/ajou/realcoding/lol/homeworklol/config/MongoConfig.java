@@ -10,7 +10,7 @@ public class MongoConfig {
     @Bean
     public MongoTemplate createMongoTemplate(){
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        String databaseName = "summoner";
+        String databaseName = "league";
         return new MongoTemplate(mongoClient, databaseName);
     }
 }
