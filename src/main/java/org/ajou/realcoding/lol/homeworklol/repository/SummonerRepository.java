@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import sun.management.snmp.util.MibLogger;
 
+import javax.sound.sampled.Line;
+
 @Slf4j
 @Repository
 public class SummonerRepository {
@@ -21,22 +23,22 @@ public class SummonerRepository {
     private MongoTemplate mongoTemplate;
 
 
-    public LeagueDTO findLeagueDTOBySummonerName(String summonerName){
+    public InformationUser findLeagueDTOBySummonerName(String summonerName){
+
         Query query = new Query();
         query.addCriteria(Criteria.where("summonerName").is(summonerName));
 
-        LeagueDTO leagueDTO = mongoTemplate.findOne(query,LeagueDTO.class);
+        InformationUser informationUser = mongoTemplate.findOne(query,InformationUser.class);
 
-
-        log.info("findOne {}",leagueDTO);
-        if(leagueDTO!=null) return leagueDTO;
+        if(informationUser!=null) return informationUser;
         else return null;
 
     }
 
     public InformationUser insertOrUpdatedLeagueDTO(InformationUser informationUser){
 
-        String summonerName = informationUser.getSummonerinfo().getName();
+        String summonerName = informationUser.getSummonerName();
+
         if(findLeagueDTOBySummonerName(summonerName)==null){
             return mongoTemplate.save(informationUser);
         }
@@ -46,9 +48,9 @@ public class SummonerRepository {
 
         Update update = new Update();
         update.set("leagueInfo",informationUser.getLeagueInfo());
-        update.set("summonerinfo",informationUser.getSummonerinfo());
 
-        log.info("update result : {}",mongoTemplate.updateFirst(query,update,LeagueDTO.class));
+        log.info("update result : {}",mongoTemplate.updateFirst(query,update, InformationUser.class));
+
         return informationUser;
     }
 }

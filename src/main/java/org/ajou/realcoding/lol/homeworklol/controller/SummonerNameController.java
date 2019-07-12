@@ -6,6 +6,7 @@ import org.ajou.realcoding.lol.homeworklol.api.SummonerLeaguePosiApiClient;
 import org.ajou.realcoding.lol.homeworklol.domain.InformationUser;
 import org.ajou.realcoding.lol.homeworklol.domain.LeagueDTO;
 import org.ajou.realcoding.lol.homeworklol.domain.SummonerDTO;
+import org.ajou.realcoding.lol.homeworklol.repository.SummonerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ public class SummonerNameController {
     private LolencryptedSummonerIdService lolencryptedSummonerIdService;
     @Autowired
     private SummonerIdApiClient summonerIdApiClient;
+    @Autowired
+    private SummonerRepository summonerRepository;
 
     @Autowired
     private SummonerLeaguePosiApiClient summonerLeaguePosiApiClient;
@@ -31,7 +34,17 @@ public class SummonerNameController {
     @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}")
     public InformationUser getSummonerId(@PathVariable String summonerName) throws IOException, InterruptedException {
 
-        return lolencryptedSummonerIdService.insertLegueDTOBySummonerName(summonerName);
+        InformationUser informationUser = new InformationUser();
+        SummonerDTO summonerDTO = summonerIdApiClient.requestSummonerDTO(summonerName);
+        String name = summonerDTO.getName();
+        informationUser.setSummonerName(name);;
+        String id = summonerDTO.getId();
+        List<LeagueDTO> leagues = summonerLeaguePosiApiClient.requestLeagueDTO(id);
+        informationUser.setLeagueInfo(leagues);
+
+        return summonerRepository.insertOrUpdatedLeagueDTO(informationUser);
+
+
 
         //소환사 이름을 통해서 id를 얻는 api client에 선언된 함수를 호출해서 얻어오는 함수
     }

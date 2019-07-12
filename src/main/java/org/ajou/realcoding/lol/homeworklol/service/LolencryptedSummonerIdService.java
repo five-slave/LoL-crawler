@@ -24,8 +24,10 @@ public class LolencryptedSummonerIdService {
 
         InformationUser informationUser = new InformationUser();
         SummonerDTO summonerDTO = summonerIdApiClient.requestSummonerDTO(summonerName);
-        informationUser.setSummonerinfo(summonerDTO);
+
+        informationUser.setSummonerName(summonerName);
         String id = summonerDTO.getId();
+
         List<LeagueDTO> leagues = summonerLeaguePosiApiClient.requestLeagueDTO(id);
         informationUser.setLeagueInfo(leagues);
 
