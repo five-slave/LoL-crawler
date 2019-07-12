@@ -34,10 +34,10 @@ public class SummonerNameController {
     @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}")
     public InformationUser getSummonerId(@PathVariable String summonerName) throws IOException, InterruptedException {
 
-        
+
         return lolencryptedSummonerIdService.insertLegueDTOBySummonerName(summonerName);
 
-        //소환사 이름을 통해서 id를 얻는 api client에 선언된 함수를 호출해서 얻어오는 함수
+        //소환사 이름을 통해서 league전적 정보를 얻는 함수
     }
 
 
