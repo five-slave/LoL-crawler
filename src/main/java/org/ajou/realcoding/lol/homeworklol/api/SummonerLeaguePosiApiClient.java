@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class SummonerLeaguePosiApiClient { //api를 통해  얻은 id로 소환사의 게임 성적을 얻는 api client
-    private final String appid = "RGAPI-6c0cb8cd-0bb0-49a8-a50c-9d65c424edd7";
+    private final String appid = "RGAPI-fea5ef13-1848-40fe-9042-88f8439cdbfe";
     private final String summonerPositionUrl = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerid}?api_key={appid}";
 
 

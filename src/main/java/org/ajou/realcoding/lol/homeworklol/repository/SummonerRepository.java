@@ -51,6 +51,9 @@ public class SummonerRepository {
 
         log.info("update result : {}",mongoTemplate.updateFirst(query,update, InformationUser.class));
 
+        System.out.println("\nSummoner "+summonerName+" is now updated. -> ");
+        System.out.println(findLeagueDTOBySummonerName(summonerName));
+
         return informationUser;
     }
 }
